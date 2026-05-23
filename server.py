@@ -7,8 +7,12 @@ from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask("Emotion Detector")
 
-@app.route("/emotionDetector") 
+@app.route("/emotionDetector")
 def sent_detector():
+    ''' Retrieve text to analyze from the request arguments
+        pass the text to emotion_detector to analyze, extract it
+        and return them as formatted strings.
+    '''
 	# Retrieve the text to analyze from the request arguments
     text_to_analyze = request.args.get('textToAnalyze')
 
@@ -25,17 +29,18 @@ def sent_detector():
 
     if dominant_emotion is None:
         return "Invalid text! Please try again!"
-    else:
-        return (
-            f"For the given statement, the system response is "
-            f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
-            f"'joy': {joy} and 'sadness': {sadness}. "
-            f"The dominant emotion is {dominant_emotion}."
-        )
 
-@app.route("/") 
-def render_index_page(): 
+    return (
+        f"For the given statement, the system response is "
+        f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
+        f"'joy': {joy} and 'sadness': {sadness}. "
+        f"The dominant emotion is {dominant_emotion}."
+    )
+
+@app.route("/")
+def render_index_page():
+    ''' Render main index.html page '''
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000) 
+    app.run(host="0.0.0.0", port=5000)
